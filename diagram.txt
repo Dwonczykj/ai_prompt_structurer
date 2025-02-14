@@ -1,0 +1,75 @@
+                           +---------------------+
+                           |      Client         |
+                           |  (HTTP Request)     |
+                           +----------+----------+
+                                      |
+                                      v
+                    +-------------------------------+
+                    |   Express Route (Router)      |
+                    |-------------------------------|
+                    | /structure_prompt             |
+                    |   - Validates schema          |
+                    |   - Handles HTTP Response      |
+                    +--------------+----------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     |    SchemaValidator          |
+                     | (utils/SchemaValidator)     |
+                     +--------------+--------------+
+                                   |
+                                   v
+                  +--------------------------------------+
+                  |    SchemaCreator                   |
+                  |   (prompts/SchemaCreator)            |
+                  |--------------------------------------|
+                  | Utility Methods:                     |
+                  | - getObjectDepth (object analysis)   |
+                  | - generateTemplateString (value to   |
+                  |   string conversion)                 |
+                  | - createZodSchema (schema creation)  |
+                  +--------------+-----------------------+
+                                   |
+                                   v
+                  +--------------------------------------+
+                  |  Prompt Template Generator           |
+                  |  (langchain integration)             |
+                  |--------------------------------------|
+                  |  Interfaces:                         |
+                  |   - IStructuredPromptTemplateCreator |
+                  |  Implementation:                     |
+                  |   - LangChainStructuredPromptTemplate|
+                  |     Creator                          |
+                  +--------------+-----------------------+
+                                   |
+                                   v
+                  +--------------------------------------+
+                  |    LLM Service (AI Integration)      |
+                  |--------------------------------------|
+                  |  Interface: IAILLMService            |
+                  |  Implementation:                     |
+                  |    - OpenAIService                   |
+                  +--------------+-----------------------+
+                                   |
+                                   v
+                           +---------------------+
+                           |    HTTP Response    |
+                           +---------------------+
+        
+    
+                       Design Patterns and Principles:
+                       ---------------------------------
+                       - **Interface Segregation & Dependency Inversion:**
+                         Components depend on interfaces (e.g., 
+                         IStructuredPromptTemplateCreator, 
+                         IAILLMService) rather than concrete classes.
+                         
+                       - **Factory / Composition Pattern:**
+                         The Prompt Template Generator composes
+                         an LLM Service (OpenAIService) to create
+                         prompts, making it easy to swap out parts.
+                         
+                       - **Single Responsibility Principle:**
+                         Each module (routing, validation, prompt
+                         generation, LLM communication) has a single,
+                         well-defined responsibility.
