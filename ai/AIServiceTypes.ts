@@ -1,0 +1,1 @@
+export type AIServiceKey = "ocr" | "titleNaming" | "objectDetection" | "emailThreadSummarizer" | "emailResponseDrafting" | "emailTopicClassification"; 
